@@ -1,0 +1,227 @@
+grammar org.xtext.lmjaq.LMJAQ with org.eclipse.xtext.common.Terminals
+
+generate lMJAQ "http://www.xtext.org/lmjaq/LMJAQ"
+
+Model:
+	abstractElments+=AbstractElement*;
+
+AbstractElement:
+	elementType=(PackageDeclaration | AbstractClass)
+;
+
+PackageDeclaration:
+	'package' name=QualifiedName
+;
+
+QualifiedName:
+	ID ('.' ID)*
+;
+
+AbstractClass:
+	type=AbstractClassType name=(ID | EVENT_CODE) '{' abstractProperties += AbstractProperty* '}'
+;
+
+AbstractClassType:
+	type=(Tela|Objeto|Recurso|Componente|EventoComplexo|ConfigGeral|Estado|Item|Alternativa|Questao)
+;
+
+Tela:
+	'Tela'
+;
+
+Objeto:
+	'Objeto'
+;
+
+AbstractProperty:
+	format=(ClassReference | Property) ':' (values+=Value*)
+;
+
+ClassReference:
+	type=AbstractClassType 
+;
+
+Property:
+	propertyType=(Posicao|estaAtivo|Caminho|TamanhoDaFonte|Conteudo|Tamanho|IU|EventoSimples|ComprimentoDaTela|AlturaDaTela|Efeito|EstadosAfetados|EstadoInicial|EstadoFinal|ProximoEstados|FormatoQuiz|Enunciado|Resposta)
+;
+
+estaAtivo:
+	'Ativo'
+;
+
+IU:
+	'IU'
+;
+
+Posicao:
+	'Posicao'
+;
+
+Value:
+	ID | Boolean | UNITYINTDECIMAL | INTEGER | PATH | UI_TYPE | SIMPLE_EVENT_TYPE | EVENT_CODE | EFEITO_ACTION | TEXT_CONTENT
+;
+
+Componente:
+	Gatilho | Comportamento
+;
+
+EventoComplexo:
+	'EventoComplexo'
+;
+
+EventoSimples:
+	'EventoSimples'
+;
+
+Gatilho:
+	AoClicar
+;
+
+AoClicar:
+	'AoClicar' 
+;
+
+Comportamento:
+	'Comportamento'
+;
+
+Recurso:
+	 (Imagem | Animacao | Texto)
+;
+
+Imagem:
+	'Imagem'
+;
+
+Animacao:
+	'Animacao'
+;
+
+Texto:
+	'Texto'
+;
+
+Conteudo:
+	'Conteudo'
+;
+
+Tamanho:
+	'Tamanho'
+;
+
+TamanhoDaFonte:
+	'TamanhoDaFonte'
+;
+
+Caminho:
+	'Caminho'
+;
+
+ConfigGeral:
+	'ConfigGeral'
+;
+
+ComprimentoDaTela:
+	'ComprimentoDaTela'
+;
+
+AlturaDaTela:
+	'AlturaDaTela'
+;
+
+Questao:
+	'Questao'
+;
+
+Alternativa:
+	'Alternativa'
+;
+
+Enunciado:
+	'Enunciado'
+;
+
+Resposta:
+	'Resposta'
+;
+
+FormatoQuiz:
+	'FormatoQuiz'
+;
+
+Estado:
+	'Estado'
+;
+
+EstadoFinal:
+	'EstadoFinal'
+;
+
+EstadoInicial:
+	'EstadoInicial'
+;
+
+ProximoEstados:
+	'ProximoEstados'
+;
+
+Item:
+	'Item'
+;
+
+Efeito:
+	'Efeito'
+;
+
+EstadosAfetados:
+	'EstadosAfetados'
+;
+
+Boolean:
+	FALSE | TRUE	
+;
+
+
+terminal TEXT_CONTENT:
+	 STRING
+;
+
+terminal EFEITO_ACTION:
+	'[Bloqueia]' | '[Adiciona]'
+;
+
+terminal UI_TYPE:
+	'[Botao]' | '[Imagem]' |'[Animacao]' | '[Texto]' 
+;
+
+terminal SIMPLE_EVENT_TYPE:
+	'[proximaTela]'
+;
+
+terminal UNITYINTDECIMAL:
+	('0'..'9')+'.'('0'..'9')
+;
+
+terminal INTEGER:
+	('1'..'9')('0'..'9')+
+;
+
+terminal PATH:
+	 SLASH (ID  SLASH)* 
+;
+
+terminal SLASH:
+	'/' | '\b'
+;
+
+terminal FALSE:
+	'false'
+;
+
+terminal TRUE:
+	'true'
+;
+
+terminal EVENT_CODE:
+	('A'..'Z')('A'..'Z')('A'..'Z')('0'..'9')+
+;
